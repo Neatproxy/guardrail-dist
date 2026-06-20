@@ -25,6 +25,38 @@ download's SHA-256 is verified against `checksums.txt` before install.
 > quarantine flag automatically; if Gatekeeper still complains, run
 > `xattr -d com.apple.quarantine ~/.local/bin/guardrail`.
 
+**Windows:** a native build is on the way but **not shipping yet** — use WSL2 (below).
+
+## Windows (via WSL2)
+
+> **A native Windows `guardrail.exe` is in progress — not shipping yet.** Until
+> then, run Guardrail under [WSL2](https://learn.microsoft.com/windows/wsl/install),
+> where it's just the Linux build and works unchanged.
+
+**Run _everything_ inside the same WSL (Ubuntu) shell — the daemon, the
+`guardrail` CLI, _and_ your coding tools (`claude` / `codex`).** A *native
+Windows* Claude Code / Codex reads `C:\Users\…` and the Windows network, so it
+never sees Guardrail and is **silently not tracked** — even though the dashboard
+shows it "connected." Quick check: `which claude` should print a path under
+`/home/...`, **not** `/mnt/c/...`.
+
+```powershell
+wsl --install        # admin PowerShell, one time; reboot when prompted
+```
+
+```bash
+# then, inside the Ubuntu (WSL) shell — install + connect + run your tools all here:
+curl -fsSL https://raw.githubusercontent.com/shreyas2231/guardrail-dist/main/install.sh | bash
+guardrail start
+guardrail connect claude-code      # and/or:  guardrail connect codex
+# install and run claude / codex INSIDE this same WSL shell, then use them normally
+```
+
+Open **http://localhost:4000** in any Windows browser (WSL2 forwards `localhost`
+to the Linux VM automatically). If `guardrail` isn't found, add `~/.local/bin` to
+your `PATH`; if the dashboard won't open, confirm `wsl -l -v` shows **VERSION 2**
+(WSL1 has no localhost forwarding).
+
 ## Use
 
 ```bash
@@ -48,4 +80,4 @@ sessions, and policies. Update any time with **`guardrail update`**. Undo with
 
 Binaries for `darwin`/`linux` × `amd64`/`arm64` are attached to each
 [release](https://github.com/shreyas2231/guardrail-dist/releases), with a
-`checksums.txt`.
+`checksums.txt`. (Windows: run under WSL2 — see above — until the native build ships.)
