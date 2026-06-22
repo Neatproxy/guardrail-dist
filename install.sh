@@ -1,14 +1,14 @@
 #!/usr/bin/env bash
 # Guardrail installer — local AI spend firewall for coding agents.
 #
-#   curl -fsSL https://raw.githubusercontent.com/shreyas2231/guardrail-dist/main/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/Neatproxy/guardrail-dist/main/install.sh | bash
 #
 # Downloads the right prebuilt binary from the PUBLIC distribution repo and
 # installs it to ~/.local/bin (or $GUARDRAIL_INSTALL_DIR). No GitHub account or
 # token needed — the source repo stays private; only binaries are published here.
 set -euo pipefail
 
-REPO="${GUARDRAIL_REPO:-shreyas2231/guardrail-dist}"
+REPO="${GUARDRAIL_REPO:-Neatproxy/guardrail-dist}"
 INSTALL_DIR="${GUARDRAIL_INSTALL_DIR:-$HOME/.local/bin}"
 VERSION="${GUARDRAIL_VERSION:-latest}" # "latest" or a tag like v0.5.0
 

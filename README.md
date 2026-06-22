@@ -14,7 +14,7 @@ private; this is the distribution channel for testers.
 macOS & Linux — one command, no GitHub account needed:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/shreyas2231/guardrail-dist/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Neatproxy/guardrail-dist/main/install.sh | bash
 ```
 
 The binary installs to `~/.local/bin/guardrail` (override with
@@ -46,7 +46,7 @@ wsl --install        # admin PowerShell, one time; reboot when prompted
 
 ```bash
 # then, inside the Ubuntu (WSL) shell — install + connect + run your tools all here:
-curl -fsSL https://raw.githubusercontent.com/shreyas2231/guardrail-dist/main/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/Neatproxy/guardrail-dist/main/install.sh | bash
 guardrail start
 guardrail connect claude-code      # and/or:  guardrail connect codex
 # install and run claude / codex INSIDE this same WSL shell, then use them normally
@@ -79,5 +79,5 @@ sessions, and policies. Update any time with **`guardrail update`**. Undo with
 ## Releases
 
 Binaries for `darwin`/`linux` × `amd64`/`arm64` are attached to each
-[release](https://github.com/shreyas2231/guardrail-dist/releases), with a
+[release](https://github.com/Neatproxy/guardrail-dist/releases), with a
 `checksums.txt`. (Windows: run under WSL2 — see above — until the native build ships.)
