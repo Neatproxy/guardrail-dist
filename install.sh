@@ -90,8 +90,25 @@ mkdir -p "$INSTALL_DIR"
 install -m 0755 "$tmp/guardrail" "$INSTALL_DIR/guardrail"
 say "Installed guardrail to $INSTALL_DIR/guardrail"
 
-# macOS Gatekeeper: clear the quarantine flag on the unsigned binary.
-if [ "$os" = "darwin" ]; then xattr -d com.apple.quarantine "$INSTALL_DIR/guardrail" 2>/dev/null || true; fi
+# macOS Gatekeeper: the binary is not yet signed or notarized. This installer
+# deliberately does NOT clear the quarantine flag for you.
+#
+# An earlier version ran `xattr -d com.apple.quarantine` here. That is the
+# wrong shape for a tool that asks to sit in front of your coding agent: an
+# installer silently disarming Gatekeeper is indistinguishable, to a reader or
+# to a security review, from an installer hiding something. It was also very
+# nearly a no-op, because curl does not set the quarantine attribute in the
+# first place (only apps opting into LSFileQuarantineEnabled, such as browsers
+# and mail clients, do). So it bought nothing and cost trust.
+#
+# If you did fetch the tarball through a browser, Gatekeeper may block the
+# binary. Clearing that is your call to make, not ours, so here is the command.
+if [ "$os" = "darwin" ]; then
+  printf '\n\033[1;33mmacOS:\033[0m this build is not yet signed or notarized by Apple.\n'
+  printf '  If Gatekeeper blocks it, you can allow it explicitly with:\n'
+  printf '    xattr -d com.apple.quarantine %s/guardrail\n' "$INSTALL_DIR"
+  printf '  Signing is on the roadmap. See %s for what the binary does and does not do.\n' "https://neatproxy.com/docs/security"
+fi
 
 case ":$PATH:" in
   *":$INSTALL_DIR:"*) ;;
